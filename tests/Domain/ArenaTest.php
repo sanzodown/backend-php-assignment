@@ -18,8 +18,20 @@ class ArenaTest extends TestCase
 {
     public function testFight(): void
     {
-        $orc1 = new Orc("1", 10);
-        $orc2 = new Orc("2", 20);
+        $orc1 = new Orc('1', 10);
+        $orc2 = new Orc('2', 20);
+
+        $arena = new Arena();
+        $result = $arena->fight($orc1, $orc2);
+
+        $this->assertNotNull($result);
+        $this->assertEquals($orc2, $result);
+    }
+
+    public function testFightFirstFighterWins(): void
+    {
+        $orc1 = new Orc('1', 20);
+        $orc2 = new Orc('2', 10);
 
         $arena = new Arena();
         $result = $arena->fight($orc1, $orc2);
@@ -30,8 +42,8 @@ class ArenaTest extends TestCase
 
     public function testFightDraw(): void
     {
-        $orc1 = new Orc("1", 10);
-        $orc2 = new Orc("2", 10);
+        $orc1 = new Orc('1', 10);
+        $orc2 = new Orc('2', 10);
 
         $arena = new Arena();
         $result = $arena->fight($orc1, $orc2);
@@ -43,9 +55,9 @@ class ArenaTest extends TestCase
 class Orc implements Fighter
 {
     private string $id;
-    private float $strength;
+    private int $strength;
 
-    public function __construct(string $id, float $strength)
+    public function __construct(string $id, int $strength)
     {
         $this->id = $id;
         $this->strength = $strength;
@@ -56,7 +68,7 @@ class Orc implements Fighter
         return $this->id;
     }
 
-    public function getPower(): float
+    public function getPower(): int
     {
         return $this->strength;
     }

@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: knight_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: knight_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - knight_network
+
+  php:
+    build: .
+    container_name: php-assignment
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "mysql://root:root@mysql:3306/knight_db?serverVersion=8.0"
+      DATABASE_URL_TEST: "mysql://root:root@mysql:3306/knight_db_test?serverVersion=8.0"
+    networks:
+      - knight_network
+
+volumes:
+  mysql_data:
+
+networks:
+  knight_network:
+    driver: bridge
+

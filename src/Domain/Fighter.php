@@ -14,5 +14,5 @@ interface Fighter
 {
     public function getID(): string;
 
-    public function getPower(): float;
+    public function getPower(): int;
 }

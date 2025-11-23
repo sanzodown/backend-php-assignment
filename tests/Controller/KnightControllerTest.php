@@ -25,7 +25,7 @@ class KnightControllerTest extends WebTestCase
             'weapon_power' => 20,
         ]);
         $client->request('POST', '/knight', [], [], [
-            'HTTP_CONTENT_TYPE' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
         ], $content);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
@@ -41,7 +41,7 @@ class KnightControllerTest extends WebTestCase
             'weapon_power' => 50,
         ]);
         $client->request('POST', '/knight', [], [], [
-            'HTTP_CONTENT_TYPE' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
         ], $content);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
@@ -55,7 +55,7 @@ class KnightControllerTest extends WebTestCase
             'name' => 'FAILED',
         ]);
         $client->request('POST', '/knight', [], [], [
-            'HTTP_CONTENT_TYPE' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
         ], $content);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -77,7 +77,7 @@ class KnightControllerTest extends WebTestCase
             'weapon_power' => 20,
         ]);
         $client->request('POST', '/knight', [], [], [
-            'HTTP_CONTENT_TYPE' => 'text/plain',
+            'CONTENT_TYPE' => 'text/plain',
         ], $content);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);

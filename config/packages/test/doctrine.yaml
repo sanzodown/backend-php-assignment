@@ -1,0 +1,5 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL_TEST)%'
+        use_savepoints: true
+

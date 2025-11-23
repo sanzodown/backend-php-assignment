@@ -10,30 +10,41 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Domain\Knight;
-use App\Domain\KnightRepositoryInterface;
+use App\Domain\Arena;
+use App\Entity\Knight;
+use App\Repository\KnightRepositoryInterface;
 
 class KnightHandler
 {
     private KnightRepositoryInterface $knightRepository;
+    private Arena $arena;
 
-    public function __construct(KnightRepositoryInterface $knightRepository)
+    public function __construct(KnightRepositoryInterface $knightRepository, Arena $arena)
     {
         $this->knightRepository = $knightRepository;
+        $this->arena = $arena;
     }
 
-    public function getKnight(string $id): Knight
+    public function getKnight(string $id): ?Knight
     {
-        return $this->knightRepository->find($id);
+        return $this->knightRepository->findById($id);
+    }
+
+    public function createKnight(string $name, int $strength, int $weaponPower): Knight
+    {
+        $knight = new Knight($name, $strength, $weaponPower);
+        $this->knightRepository->save($knight);
+
+        return $knight;
     }
 
     public function listKnights(): iterable
     {
-
+        return $this->knightRepository->getAll();
     }
 
-    public function fight($knightA, $knightB): Knight
+    public function fight(Knight $knightA, Knight $knightB): ?Knight
     {
-
+        return $this->arena->fight($knightA, $knightB);
     }
 }

@@ -12,8 +12,19 @@ namespace App\Domain;
 
 class Arena
 {
-    public function fight($fighterA, $fighterB)
+    public function fight(Fighter $fighterA, Fighter $fighterB): ?Fighter
     {
+        $powerA = $fighterA->getPower();
+        $powerB = $fighterB->getPower();
 
+        if ($powerA > $powerB) {
+            return $fighterA;
+        }
+
+        if ($powerB > $powerA) {
+            return $fighterB;
+        }
+
+        return null;
     }
 }

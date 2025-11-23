@@ -8,13 +8,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\Domain;
+namespace App\Repository;
+
+use App\Entity\Knight;
 
 interface KnightRepositoryInterface
 {
-    public function find(string $id): Knight;
+    public function findById(string $id): ?Knight;
 
-    public function getAll(): iterable;
+    public function getAll(): array;
 
     public function save(Knight $knight): void;
 }
